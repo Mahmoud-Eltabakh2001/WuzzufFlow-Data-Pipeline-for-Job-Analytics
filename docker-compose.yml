@@ -1,0 +1,179 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: job_data
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - hadoop
+
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=test
+    ports:
+      - "9870:9870"
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    networks:
+      - hadoop
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    environment:
+      - CLUSTER_NAME=test
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    depends_on:
+      - namenode
+    networks:
+      - hadoop
+
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-spark:latest  
+    container_name: spark
+    environment:
+      - SPARK_MODE=master
+    volumes:
+      - ./airflow/spark_jobs:/opt/airflow/spark_jobs
+      - ./airflow/validation_report:/opt/bitnami/spark/validation_report  
+
+#      - ./airflow/validation_report:/opt/airflow/validation_report  #  mount in same path used by Airflow
+#      - ./airflow/spark_jobs:/opt/bitnami/spark_jobs
+
+    depends_on:
+      - namenode
+      - datanode
+    networks:
+      - hadoop
+
+  spark-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+    depends_on:
+      - spark
+    networks:
+      - hadoop
+
+  airflow:
+    image: apache/airflow:2.8.1
+    container_name: airflow
+    restart: always
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/job_data
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/spark_jobs:/opt/airflow/spark_jobs
+      - ./airflow/validation_reports:/opt/airflow/validation_reports
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    command: >
+      bash -c "
+      pip install great_expectations &&
+      airflow db migrate &&
+      airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com &&
+      exec airflow webserver"
+    networks:
+      - hadoop
+
+  airflow-scheduler:
+    image: apache/airflow:2.8.1
+    container_name: airflow-scheduler
+    restart: always
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/job_data
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/spark_jobs:/opt/airflow/spark_jobs
+      - ./airflow/validation_reports:/opt/airflow/validation_reports
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres
+    command: >
+      bash -c "
+      pip install great_expectations &&
+      exec airflow scheduler"
+    networks:
+      - hadoop
+
+  scraper:
+    image: python:3.10
+    container_name: scraper
+    working_dir: /app
+    volumes:
+      - ./scraper:/app
+    command: >
+      bash -c "
+      pip install requests beautifulsoup4 &&
+      python scraper.py"
+    networks:
+      - hadoop
+
+  great_expectations:
+    image: python:3.10
+    container_name: great_expectations
+    working_dir: /app
+    volumes:
+      - ./great_expectations:/app
+    command: >
+      bash -c "
+      pip install great_expectations pandas &&
+      python validate.py"
+    networks:
+      - hadoop
+
+  streamlit:
+    image: python:3.10
+    container_name: streamlit
+    working_dir: /app
+    volumes:
+      - ./streamlit:/app
+    ports:
+      - "8501:8501"
+    command: >
+      bash -c "
+      pip install -r requirements.txt &&
+      streamlit run app.py --server.port=8501 --server.address=0.0.0.0"
+
+    networks:
+      - hadoop
+
+volumes:
+  pg_data:
+  hadoop_namenode:
+  hadoop_datanode:
+
+networks:
+  hadoop:
+    driver: bridge
