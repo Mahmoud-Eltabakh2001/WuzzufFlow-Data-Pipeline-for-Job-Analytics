@@ -113,7 +113,7 @@ Trigger the DAG manually or wait for its schedule.
 📧 Contact
 Mahmoud Reda
 
-🔗![ LinkedIn Profile]([https://www.linkedin.com/in/mahmoud-reda2001/])
+[🔗 LinkedIn Profile](https://www.linkedin.com/in/mahmoud-reda2001/)
 
 
 📧 mahmoud.reda.eltabakh@gmail.com
