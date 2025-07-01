@@ -111,9 +111,8 @@ HDFS Namenode	http://localhost:9870
 Trigger the DAG manually or wait for its schedule.
 
 📧 Contact
-Mahmoud Reda
 
-[🔗 LinkedIn Profile](https://www.linkedin.com/in/mahmoud-reda2001/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mahmoud_Reda-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/mahmoud-reda2001/)
 
 
 📧 mahmoud.reda.eltabakh@gmail.com
