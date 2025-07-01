@@ -79,8 +79,10 @@ The dashboard includes:
 
 - Latest scraped job listings  
 - Jobs per experience level (bar chart)  
-- Jobs per work type (pie chart)  
-- Jobs by country (top 10)  
+- Jobs per work type (bar chart)
+- Jobs per workplace (bar chart)  
+- Jobs by country (top 10) 
+- Jobs by city (top 10)  
 - WordCloud of job skills  
 
 ---
