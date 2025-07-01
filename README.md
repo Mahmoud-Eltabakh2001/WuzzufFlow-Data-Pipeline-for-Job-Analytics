@@ -97,5 +97,23 @@ The dashboard includes:
 
 ---
 
+Access the services:
+
+Service	URL
+Airflow	http://localhost:8080
+Streamlit	http://localhost:8501
+pgAdmin (if used)	http://localhost:5050
+HDFS Namenode	http://localhost:9870
+
+Trigger the DAG manually or wait for its schedule.
+
+📧 Contact
+Mahmoud Reda
+
+🔗 LinkedIn Profile
+
+📧 mahmoud.reda.eltabakh@gmail.com
+
+Feel free to connect or reach out for collaboration, job opportunities, or project feedback.
 
 
