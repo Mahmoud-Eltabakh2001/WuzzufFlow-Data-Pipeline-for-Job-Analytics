@@ -66,7 +66,14 @@ The project demonstrates real-world Data Engineering skills using modern open-so
 ```
 
 
+## 🧪 Validations
+Applied Great Expectations tests on transformed data.
 
+Generated HTML report stored at:
+
+```
+great_expectations/validation_report.html
+```
 
 ---
 
@@ -87,14 +94,6 @@ The dashboard includes:
 
 ---
 
-## 🧪 Validations
-Applied Great Expectations tests on transformed data.
-
-Generated HTML report stored at:
-
-```
-great_expectations/validation_report.html
-```
 
 ## ⚙️ How It Works
 
