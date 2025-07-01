@@ -64,4 +64,47 @@ The project demonstrates real-world Data Engineering skills using modern open-so
 
 
 
-<pre lang="text"><code> . ├── airflow/ │ ├── dags/ │ │ ├── dag.py │ │ └── Wuzzuf_data.csv ├── great_expectations/ │ └── validation_report.html ├── jars/ │ └── postgresql-42.7.7.jar ├── scraper/ │ └── scrape_wuzzuf.py ├── streamlit/ │ ├── app.py │ └── requirements.txt ├── spark_jobs/ │ ├── __init__.py │ ├── ge_validation.py │ ├── load_to_postgres.py │ ├── run_validation.sh │ └── transform_wuzzuf.py ├── images/ │ └── Workflow.jpg ├── docker-compose.yml └── Dockerfile </code></pre>
+<pre lang="text"><code> 
+  . ├── airflow/ │ ├── dags/ │ │ ├── dag.py │ │ └── Wuzzuf_data.csv ├── great_expectations/ │ └── validation_report.html ├── jars/ │ └── postgresql-42.7.7.jar ├── scraper/ │ └── scrape_wuzzuf.py ├── streamlit/ │ ├── app.py │ └── requirements.txt ├── spark_jobs/ │ ├── __init__.py │ ├── ge_validation.py │ ├── load_to_postgres.py │ ├── run_validation.sh │ └── transform_wuzzuf.py ├── images/ │ └── Workflow.jpg ├── docker-compose.yml └── Dockerfile 
+</code></pre>
+
+
+
+
+---
+
+## 📈 Dashboard Preview
+
+Once the pipeline runs, you can access the Streamlit dashboard at:  
+📍 `http://localhost:8501/`
+
+The dashboard includes:
+
+- Latest scraped job listings  
+- Jobs per experience level (bar chart)  
+- Jobs per work type (pie chart)  
+- Jobs by country (top 10)  
+- WordCloud of job skills  
+
+---
+
+## ⚙️ How It Works
+
+1. **Scrape** job data from Wuzzuf using `scraper.py`.
+2. **Store** raw data into HDFS.
+3. **Transform** it using Apache Spark (e.g., normalize, clean skills).
+4. **Validate** transformed data using Great Expectations.
+5. **Load** clean data into PostgreSQL.
+6. **Visualize** through an interactive dashboard using Streamlit.
+7. **Orchestrate** the whole process using Apache Airflow.
+
+---
+
+## 🧪 How to Run
+
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/your-username/wuzzuf-pipeline.git
+cd wuzzuf-pipeline
+
