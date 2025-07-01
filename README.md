@@ -87,7 +87,7 @@ The dashboard includes:
 
 ---
 
-🧪 Validations
+## 🧪 Validations
 Applied Great Expectations tests on transformed data.
 
 Generated HTML report stored at:
