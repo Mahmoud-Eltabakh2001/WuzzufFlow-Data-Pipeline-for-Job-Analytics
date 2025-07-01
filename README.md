@@ -64,9 +64,32 @@ The project demonstrates real-world Data Engineering skills using modern open-so
 
 
 
-<pre lang="text"><code> 
-├── airflow/ │ ├── dags/ │ │ ├── dag.py │ │ └── Wuzzuf_data.csv ├── great_expectations/ │ └── validation_report.html ├── jars/ │ └── postgresql-42.7.7.jar ├── scraper/ │ └── scrape_wuzzuf.py ├── streamlit/ │ ├── app.py │ └── requirements.txt ├── spark_jobs/ │ ├── __init__.py │ ├── ge_validation.py │ ├── load_to_postgres.py │ ├── run_validation.sh │ └── transform_wuzzuf.py ├── images/ │ └── Workflow.jpg ├── docker-compose.yml └── Dockerfile 
-</code></pre>
+```
+.
+├── airflow/
+│   ├── dags/
+│   │   ├── dag.py
+│   │   └── Wuzzuf_data.csv
+├── great_expectations/
+│   └── validation_report.html
+├── jars/
+│   └── postgresql-42.7.7.jar
+├── scraper/
+│   └── scrape_wuzzuf.py
+├── streamlit/
+│   ├── app.py
+│   └── requirements.txt
+├── spark_jobs/
+│   ├── __init__.py
+│   ├── ge_validation.py
+│   ├── load_to_postgres.py
+│   ├── run_validation.sh
+│   └── transform_wuzzuf.py
+├── images/
+│   └── Workflow.jpg
+├── docker-compose.yml
+└── Dockerfile
+```
 
 
 
