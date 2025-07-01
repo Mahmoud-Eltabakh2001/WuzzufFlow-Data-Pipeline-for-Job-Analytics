@@ -101,8 +101,11 @@ Access the services:
 
 Service	URL
 Airflow	http://localhost:8080
+
 Streamlit	http://localhost:8501
-pgAdmin (if used)	http://localhost:5050
+
+pgAdmin 	http://localhost:5050
+
 HDFS Namenode	http://localhost:9870
 
 Trigger the DAG manually or wait for its schedule.
@@ -110,7 +113,8 @@ Trigger the DAG manually or wait for its schedule.
 📧 Contact
 Mahmoud Reda
 
-🔗 LinkedIn Profile
+🔗 LinkedIn Profile    ![Workflow]((https://www.linkedin.com/in/mahmoud-reda2001/))
+
 
 📧 mahmoud.reda.eltabakh@gmail.com
 
